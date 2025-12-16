@@ -1,0 +1,74 @@
+.container
+.content-container
+  container()
+
+// .content-wrapper
+//   padding-top 30px
+//   padding-bottom 30px
+//   +desktop()
+//     padding-top 45px
+//     padding-bottom 60px
+
+// .hidden
+//   display none !important
+
+.visually-hidden
+  visually-hidden()
+
+.hide-mobile
+  +below($desktop)
+    display none !important
+
+.hide-desktop
+  +desktop()
+    display none !important
+
+// Float
+
+.clearfix
+  cf()
+
+// Misc
+
+.scroll-lock-ios
+  position fixed
+  overflow hidden
+  touch-action none
+
+.scroll-lock
+  overflow hidden
+  touch-action none
+
+custom-scrollbar()
+  overflow-x hidden
+  overflow-y auto
+  &::-webkit-scrollbar-track
+    background-color var(--bg-color-light)
+    -webkit-box-shadow inset 0 0 4px rgba(0,0,0,.05)
+    border-radius 1rem
+  &::-webkit-scrollbar
+    width .25rem
+    background-color var(--bg-color-light)
+    border-radius 1rem
+  &::-webkit-scrollbar-thumb
+    background-color var(--color-text-blind)
+    border-radius 1rem
+
+.custom-scrollbar
+  custom-scrollbar()
+
+.desktop-custom-scrollbar
+  @media (min-width 1280px)
+    custom-scrollbar()
+
+.reset-last-mb
+  & > *:last-child
+    margin-bottom 0
+
+.desktop-scroll-aria
+  @media (min-width 1280px)
+    max-height 100%
+    overflow-y auto
+    margin-right -20px
+    padding-right 20px
+    custom-scrollbar()

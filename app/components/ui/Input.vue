@@ -1,0 +1,84 @@
+<script setup>
+import { useField } from 'vee-validate';
+import { useModClasses } from '../../composables/useModClasses'
+
+const props = defineProps({
+  name: String,
+  type: {
+    type: String,
+    default: 'text',
+  },
+  mod: String,
+});
+
+const {
+  value,
+  errorMessage,
+  handleBlur,
+  handleChange,
+  meta,
+} = useField(() => props.name);
+
+const computedClass = computed(() => useModClasses('input', props.mod));
+</script>
+
+<template>
+  <input
+    :name="name"
+    :type="type"
+    v-model="value"
+    class="input"
+    :class="[computedClass, { 'is-invalid': !!errorMessage, 'is-valid': meta.valid }]"
+    @input="handleChange"
+    @blur="handleBlur"
+  />
+  <!-- <p class="input__message" v-show="errorMessage || meta.valid">
+    {{ errorMessage || successMessage }}
+  </p> -->
+</template>
+
+
+
+<style lang="stylus">
+.input
+  display block
+  width 100%
+  height 3.5rem
+  padding 0 1rem
+  color var(--color-black)
+  font-weight 400
+  font-size 1rem
+  font-family var(--font-family)
+  font-variant-numeric lining-nums proportional-nums
+  line-height 1.5
+  background-color var(--bg-color-light)
+  background-clip padding-box
+  border 1px solid var(--color-border)
+  border-radius .75rem
+  transition all .2s ease
+  appearance none
+  &:invalid
+    box-shadow none
+  &:hover
+    background-color var(--color-grey-2)
+  &:focus-visible
+    background-color var(--bg-color-light)
+    border-color var(--color-text-accent)
+    outline none
+  &::placeholder
+    color var(--color-text-blind)
+    opacity 1
+  &:disabled
+    color var(--color-text-blind)
+    background-color var(--color-card)
+    border-color var(--color-border)
+    pointer-events none
+  &:-webkit-autofill
+    transition background-color 10000000s ease-out
+
+  // .is-invalid &
+  // &.is-invalid
+  //   border-color var(--color-error)
+  &.is-valid
+    border-color var(--color-success)
+</style>

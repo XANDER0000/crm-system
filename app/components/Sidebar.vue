@@ -5,32 +5,46 @@
           <NuxtLink class="sidebar__logo" to="">
             <NuxtImg src="assets/img/logo.svg" width="40" height="40" alt="Логотип" />
           </NuxtLink>
-          <div class="logo logo--blue logo--mini sidebar__logo">
-              <div class="logo__image">
-              </div>
-          </div>
-          <UiNavBtn />
+          <NavBtn />
       </div>
       <div class="sidebar__content">
         <div class="sidebar__btns"> 
-          <NuxtLink class="sidebar__btn" to="">Уведомления</NuxtLink>
+          <NuxtLink v-for="item in MENU_ITEMS" :key="item.name" class="sidebar__btn" :to="item.url">
+            <Icon v-if="item.icon" class="sidebar__btn-icon" :name="item.icon" />
+            <span class="sidebar__btn-label">{{ item.name }}</span>
+          </NuxtLink>
         </div>
     </div>
-</div>
-
-  </aside>
+  </div>
+</aside>
 </template>
 
 <script setup lang="ts">
 import debounce from '@/utils/debounce';
 import ScrollLock from '@/helpers/scroll-lock';
 
+interface MenuItem {
+  icon?: string;
+  name?: string;
+  url?: string;
+}
+
+const MENU_ITEMS: MenuItem[] = [
+  { icon: 'mdi:house', name: 'Главная', url: '/' },
+  { icon: 'mdi:shopping', name: 'Продукты', url: '/products' },
+  { icon: 'mdi:order-bool-descending-variant', name: 'Заказы', url: '/orders' },
+  { icon: 'mdi:users', name: 'Клиенты', url: '/customers' },
+  { icon: 'mdi:feedback', name: 'Обратная связь', url: '/feedback' },
+  { icon: 'mdi:settings', name: 'Настройки', url: '/settings' },
+  { icon: 'mdi:help', name: 'Центр поддержки', url: '/help' },
+]
+
 
 onMounted(() => {
   if (!window.scrollLock) {
     window.scrollLock = new ScrollLock();
   }
-  
+
   const foundElements = document.querySelectorAll<HTMLElement>('.sidebar__content');
   if (foundElements.length !== 0) {
     sidebarInit(foundElements);
@@ -151,7 +165,7 @@ function sidebarInit(elements: NodeListOf<HTMLElement>) {
   display block
   @media(min-width 1280px)
     flex 0 0 auto
-    width 280px
+    width 380px
 
   &__header
     z-index 100
@@ -191,27 +205,20 @@ function sidebarInit(elements: NodeListOf<HTMLElement>) {
     align-items center
     padding 0.75rem
     text-decoration none
+    &:hover
+    &:focus-visible
+      text-decoration none
+      color var(--color-button-primary-dark)
     &--selected
       &::after
         size 8px
         background-color #e6462a
         border-radius 50%
         content ''
-
-  &__btn-count
-    display flex
-    flex 0 0 auto
-    align-items center
-    justify-content center
-    min-width 25px
-    min-height 25px
-    padding 0 0.25rem
-    color var(--color-white)
-    font-size 0.875rem
-    line-height 1
-    text-align center
-    background-color #e6462a
-    border-radius 50%
+  
+  &__btn-icon
+    width 20px
+    height 20px
 
   &__header
     position fixed

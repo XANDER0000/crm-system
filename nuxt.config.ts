@@ -17,26 +17,48 @@ export default defineNuxtConfig({
     },
   },
 
-  // srcDir: "src/",
+  srcDir: "app/",
 
-  // components: [
-  //   {
-  //     path: '~/components',
-  //     pathPrefix: false,
-  //   },
-  // ],
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false,
+    },
+  ],
 
   css: ["~/assets/styles/index.styl"],
 
   modules: [
     // "@unocss/nuxt",
     // "nuxt-swiper",
-    // "nuxt-icons",
+    "@nuxt/icon",
     "@nuxt/image",
+    '@nuxtjs/tailwindcss',
     // "nuxt-headlessui",
-    // "@pinia/nuxt",
+    "@pinia/nuxt",
     // 'radix-vue/nuxt',
-  ],
+  ],  
+  
+  tailwindcss: {
+    exposeConfig: true,
+    viewer: true,
+  },
+
+  icon: {
+    customCollections: [
+      {
+        prefix: 'my-icon',
+        dir: './app/assets/icons',
+      },
+    ],
+  },
+  
+  // shadcn: {
+  //   prefix: 'Ui',
+  //   componentDir: [
+  //     '@/components/ui',
+  //   ],
+  // },
 
   // image: {
   //   inject: true
@@ -46,16 +68,16 @@ export default defineNuxtConfig({
   //   prefix: "Headless",
   // },
 
-  // pinia: {
-  //   storesDirs: ['~/stores/**','./src/stores/**','./stores/**'],
-  // },
+  pinia: {
+    storesDirs: ['~/stores/**','./src/stores/**','./stores/**'],
+  },
 
-  // runtimeConfig: {
-  //   public: {
-  //     apiDomain: process.env.API_DOMAIN ?? "",
-  //     appDomain: process.env.APP_DOMAIN ?? "",
-  //   },
-  // },
+  runtimeConfig: {
+    public: {
+      appwriteEndpoint: process.env.NUXT_PUBLIC_APPWRITE_ENDPOINT ?? "",
+      appwriteProjectId: process.env.NUXT_PUBLIC_APPWRITE_PROJECT_ID ?? "",
+    },
+  },
 
   compatibilityDate: "2025-12-15",
 });

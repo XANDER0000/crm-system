@@ -1,5 +1,5 @@
 <template>
-  <aside class="sidebar">
+  <aside class="sidebar" v-if="!isPageLoading">
     <div class="sidebar__box">
       <div class="sidebar__header">
           <NuxtLink class="sidebar__logo" to="">
@@ -9,6 +9,13 @@
       </div>
       <div class="sidebar__content">
         <div class="sidebar__btns"> 
+          <div class="sidebar__user">
+            <Icon name="mdi:account" class="sidebar__user-icon" />
+            <span class="sidebar__user-name">{{ user.name || user.email }}</span>
+            <button @click="handleLogout" class="sidebar__user-exit">
+              <Icon name="mdi:exit-to-app" />
+            </button>
+          </div>
           <NuxtLink v-for="item in MENU_ITEMS" :key="item.name" class="sidebar__btn" :to="item.url">
             <Icon v-if="item.icon" class="sidebar__btn-icon" :name="item.icon" />
             <span class="sidebar__btn-label">{{ item.name }}</span>
@@ -22,11 +29,18 @@
 <script setup lang="ts">
 import debounce from '@/utils/debounce';
 import ScrollLock from '@/helpers/scroll-lock';
+const isPageLoading = inject('isPageLoading');
+const { getCurrentUser, logout } = useAuth();
 
 interface MenuItem {
   icon?: string;
   name?: string;
   url?: string;
+}
+
+interface User {
+  email?: string;
+  name?: string;
 }
 
 const MENU_ITEMS: MenuItem[] = [
@@ -39,17 +53,17 @@ const MENU_ITEMS: MenuItem[] = [
   { icon: 'mdi:help', name: 'Центр поддержки', url: '/help' },
 ]
 
+const user = ref(<User>{});
 
-onMounted(() => {
-  if (!window.scrollLock) {
-    window.scrollLock = new ScrollLock();
-  }
+const handleLogout = async () => {
+  const result = await logout();
 
-  const foundElements = document.querySelectorAll<HTMLElement>('.sidebar__content');
-  if (foundElements.length !== 0) {
-    sidebarInit(foundElements);
+  if (result.success) {
+    navigateTo('/login');
+  } else if (result.error) {
+    console.log(result.error);
   }
-});
+}
 
 function sidebarInit(elements: NodeListOf<HTMLElement>) {
   elements.forEach((component: HTMLElement) => {
@@ -158,6 +172,27 @@ function sidebarInit(elements: NodeListOf<HTMLElement>) {
     window.addEventListener('resize', debounce(handleResizePage, 200));
   });
 }
+
+onMounted(async () => {
+  const result = await getCurrentUser();
+  if (result.success && result.data?.user) {
+    user.value = {
+      email: result.data.user.email,
+      name: result.data.user.name
+    };
+  }
+});
+
+onMounted(() => {
+  if (!window.scrollLock) {
+    window.scrollLock = new ScrollLock();
+  }
+
+  const foundElements = document.querySelectorAll<HTMLElement>('.sidebar__content');
+  if (foundElements.length !== 0) {
+    sidebarInit(foundElements);
+  }
+});
 </script>
 
 <style lang="stylus">
@@ -169,6 +204,27 @@ function sidebarInit(elements: NodeListOf<HTMLElement>) {
 
   &__header
     z-index 100
+
+  &__user
+    display flex 
+    gap 8px
+    align-items center
+    padding 0.75rem
+    color var(--color-primary)
+    &-name
+      transition all .2s ease
+    &-icon
+      font-size 1.2rem
+    &-exit
+      display flex 
+      align-items center
+      justify-content center
+      margin-left auto
+      color var(--color-text)
+      font-size 1.8rem
+      &:hover
+      &:focus-visible
+        color var(--color-button-primary-dark)
 
   &__content
     z-index 99

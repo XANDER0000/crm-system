@@ -3,8 +3,7 @@ import type { Models } from 'appwrite';
 
 export const useAuth = () => {
   const config = useRuntimeConfig();
-  
-  console.log(config.public.appwriteEndpoint, config.public.appwriteProjectId);
+
   // Проверяем и получаем значения с дефолтами
   const endpoint = config.public.appwriteEndpoint;
   const projectId = config.public.appwriteProjectId;
@@ -35,6 +34,13 @@ export const useAuth = () => {
   // Логин через Appwrite
   const login = async (credentials: UserInput): Promise<AuthResponse> => {
     try {
+      // Удаляем существующую сессию, если она есть
+      try {
+        await account.deleteSession('current');
+      } catch (error) {
+        // Если нет активной сессии, это не ошибка
+      }
+      
       // Создаем сессию в Appwrite
       const session = await account.createEmailPasswordSession(
         credentials.email,
@@ -136,7 +142,6 @@ export const useAuth = () => {
         ID.unique(),
         credentials.email,
         credentials.password,
-        credentials.name
       );
       
       // Автоматически логиним пользователя после регистрации

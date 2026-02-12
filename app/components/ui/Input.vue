@@ -4,6 +4,8 @@ import { useModClasses } from '../../composables/useModClasses'
 
 const props = defineProps({
   name: String,
+  placeholder: String,
+  id: String,
   type: {
     type: String,
     default: 'text',
@@ -26,15 +28,17 @@ const computedClass = computed(() => useModClasses('input', props.mod));
   <input
     :name="name"
     :type="type"
+    :id="props.id"
+    :placeholder="props.placeholder"
     v-model="value"
     class="input"
     :class="[computedClass, { 'is-invalid': !!errorMessage, 'is-valid': meta.valid }]"
     @input="handleChange"
     @blur="handleBlur"
   />
-  <!-- <p class="input__message" v-show="errorMessage || meta.valid">
-    {{ errorMessage || successMessage }}
-  </p> -->
+  <p class="input__message mt-1 mb-0" v-show="errorMessage || meta.valid">
+    {{ errorMessage }}
+  </p>
 </template>
 
 
@@ -76,9 +80,13 @@ const computedClass = computed(() => useModClasses('input', props.mod));
   &:-webkit-autofill
     transition background-color 10000000s ease-out
 
-  // .is-invalid &
-  // &.is-invalid
-  //   border-color var(--color-error)
+  .is-invalid &
+  &.is-invalid
+    border-color var(--color-error)
   &.is-valid
     border-color var(--color-success)
+
+  &__message
+    color var(--color-error)
+    font-size 14px
 </style>

@@ -66,13 +66,15 @@ const modClass = computed(() => useModClasses(baseClass, props.mod));
 
   .input
     padding-top 1rem
+    font-size 1rem
+    transform translateY(0)
     &::placeholder
       opacity 0
     &:focus
-    &:not(:empty)
-    &:not(:placeholder-shown)
       &::placeholder
         opacity 1
+    &:focus,
+    &:not(:placeholder-shown)
       & + ^[0]__label
       & + .input__message + ^[0]__label
         font-size .75rem

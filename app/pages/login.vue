@@ -67,10 +67,10 @@ const handleLogin = handleSubmit(async () => {
   });
   
   if (result.success) {
+    navigateTo('/');
     formErrors.value = [];
     isLoggedIn.value = true;
     resetForm();
-    navigateTo('/');
   } else {
     if (result.error) {
       formErrors.value = [result.error];

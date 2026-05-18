@@ -1,17 +1,25 @@
 <template>
-  <div>
-    Главная страница
-  </div>
+  <Board v-if="!isPageLoading" />
 </template>
 
 <script setup>
+const isPageLoading = inject('isPageLoading');
+const { userLoggedIn } = useAuth();
+
+useSeoMeta({
+  title: 'Главная',
+});
 
 definePageMeta({
   layout: 'main',
+  // middleware: ['auth'],
 });
 
-useHead({
-  title: 'Главная',
+onBeforeMount(async () => {
+  const isLoggedIn = await userLoggedIn();
+  if (!isLoggedIn) {
+    navigateTo('/login');
+  }
 });
 </script>
 

@@ -28,8 +28,8 @@ router.afterEach(() => {
   isPageLoading.value = false;
 });
 
-onMounted(() => {
-  isPageLoading.value = false
+onMounted(async () => {
+  isPageLoading.value = false;
 })
 
 </script>

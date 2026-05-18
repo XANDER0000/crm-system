@@ -36,7 +36,7 @@ export default {}
     min-height 100vh
     @media (min-width 1280px)
       flex-direction row
-      gap 73px
+      gap 48px
 
   &__content
     --gap 2rem

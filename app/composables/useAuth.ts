@@ -79,7 +79,7 @@ export const useAuth = () => {
     try {
       // Проверяем, есть ли активная сессия в Appwrite
       const user = await account.get();
-      
+
       if (user) {
         setUser(user);
         

@@ -56,7 +56,7 @@ const computedClass = computed(() => useModClasses('input', props.mod));
   font-variant-numeric lining-nums proportional-nums
   line-height 1.5
   background-color var(--bg-color-light)
-  background-clip padding-box
+  background-clip border-box
   border 1px solid var(--color-border)
   border-radius .75rem
   transition all .2s ease

@@ -34,7 +34,7 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@nuxt/image",
     '@nuxtjs/tailwindcss',
-    // "nuxt-headlessui",
+    "nuxt-headlessui",  
     "@pinia/nuxt",
     // 'radix-vue/nuxt',
   ],  
@@ -43,7 +43,7 @@ export default defineNuxtConfig({
     exposeConfig: true,
     viewer: true,
   },
-
+  
   icon: {
     customCollections: [
       {

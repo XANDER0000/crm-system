@@ -170,7 +170,7 @@ const modClass = computed(() => useModClasses(baseClass, props.mod));
       pointer-events none
 
   &--secondary
-    color var(--color-text-accent)
+    color var(--color-white)
     background-color transparent
     border-color var(--color-border)
     &:hover

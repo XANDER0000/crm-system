@@ -81,7 +81,7 @@ const onClose = () => {
   min-height 2.75rem
   min-width 2.75rem
   padding .5rem 1.125rem
-  color var(--color-text)
+  color var(--color-text-dark)
   font-weight 400
   font-size 1rem
   font-family var(--font-family)

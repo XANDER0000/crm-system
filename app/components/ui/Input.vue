@@ -2,6 +2,10 @@
 import { useField } from 'vee-validate';
 import { useModClasses } from '../../composables/useModClasses'
 
+defineOptions({
+  inheritAttrs: false,
+});
+
 const props = defineProps({
   name: String,
   placeholder: String,
@@ -35,6 +39,7 @@ const computedClass = computed(() => useModClasses('input', props.mod));
     :class="[computedClass, { 'is-invalid': !!errorMessage, 'is-valid': meta.valid }]"
     @input="handleChange"
     @blur="handleBlur"
+    v-bind="$attrs"
   />
   <p class="input__message mt-1 mb-0" v-show="errorMessage || meta.valid">
     {{ errorMessage }}
@@ -44,6 +49,9 @@ const computedClass = computed(() => useModClasses('input', props.mod));
 
 
 <style lang="stylus">
+.input-wrapper
+  position relative
+
 .input
   display block
   width 100%

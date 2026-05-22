@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center justify-center min-h-screen">
     <h1 class="text-white text-2xl font-bold mb-4">Вход</h1>    
   <div class="login-widget">
-    <form @submit="handleLogin" :validation-schema="loginSchema" class="login-widget__form">
+    <form @submit="handleLogin" class="login-widget__form">
       <InputField label="Ваш email" for="form-login-email" class="mb-5">
         <Input @input="prevalidateForm" placeholder="admin@mail.ru" type="text" id="form-login-email" name="email" v-model="values.email"/>
       </InputField>

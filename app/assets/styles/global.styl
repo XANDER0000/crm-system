@@ -6,15 +6,10 @@ html
   min-width 320px
   margin 0
   font-size 100%
-  // -ms-overflow-style scrollbar
+  -ms-overflow-style scrollbar
   -ms-text-size-adjust 100%
-  // scroll-behavior smooth
-  @media (min-width 1280px)
-    position fixed
-    top 0
-    right 0
-    bottom 0
-    left 0
+  scroll-behavior smooth
+
 
   &.is-menu-open
     display flex
@@ -27,7 +22,7 @@ html
 
 html
 body
-  height 100vh
+  min-height 100vh
   // height var(--doc-height)
 
 body
@@ -45,8 +40,6 @@ body
     content ""
   // &:has(dialog[open])
   //   overflow hidden
-  +desktop()
-    overflow-y hidden
 
 :focus:not(:focus-visible)
   outline none

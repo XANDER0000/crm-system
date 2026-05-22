@@ -19,14 +19,17 @@ export function useBoardQuery() {
 			Query.select(['*', 'customer.*'])
 		]),
     select(data) {
-      const newBoard = [...BOARD_DATA]
+      // const newBoard = BOARD_DATA.map(column => ({
+			// 	...column,
+			// 	items: [...column.items || []]
+			// }))
+			const newBoard = structuredClone(BOARD_DATA)
 
 			const deals = data.documents as unknown as Deal[]
 
 			for (const deal of deals) {
 				const column = newBoard.find(col => col.id === deal.status)
 				if (column) {
-					console.log(deal)
 					column.items.push({
 						$createdAt: deal.$createdAt,
 						$id: deal.$id,

@@ -1,4 +1,5 @@
-import type { DealFormState } from '../types/deals'
+import type { Deal } from '../types/deals'
+import type { StatusType } from '../constants/status'
 import { useMutation } from '@tanstack/vue-query'
 
 export const useDeal = () => {
@@ -9,12 +10,19 @@ export const useDeal = () => {
 
   const { mutateAsync: sendDeal, isPending } = useMutation({
     mutationKey: ['create a new deal'],
-    mutationFn: (data: DealFormState) => 
+    mutationFn: (data: Deal) => 
       database.createDocument(DB_ID, COLLECTION_DEALS, crypto.randomUUID(), data),
+  })
+
+  const { mutateAsync: dragDeal } = useMutation({
+    mutationKey: ['drag deal'],
+    mutationFn: ({ dealId, status }: { dealId: string; status: StatusType }) =>  
+      database.updateDocument(DB_ID, COLLECTION_DEALS, dealId, { status }),
   })
 
   return {
     sendDeal,
+    dragDeal,
     isPending
   }
 }

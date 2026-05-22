@@ -23,11 +23,3 @@ export interface Deal extends BaseField {
   price?: number;
   status?: StatusType;
 }
-
-export interface DealFormState extends Pick<Deal, 'name' | 'price'> {
-	customer: {
-		email: string
-		name: string
-	}
-	status: string
-}

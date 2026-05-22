@@ -26,14 +26,14 @@ export default {}
 
   &__main
   &__content
-    // flex 1 0 auto
+    display flex 
+    flex-direction column
     width 100%
 
   &__grid
     display flex
     flex-direction column
     gap 24px
-    min-height 100vh
     @media (min-width 1280px)
       flex-direction row
       gap 48px

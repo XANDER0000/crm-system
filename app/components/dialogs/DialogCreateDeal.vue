@@ -46,7 +46,7 @@
         <div v-if="formErrors.length > 0" class="flex flex-col gap-2 mt-6 mb-6">
           <LazyAlert v-for="error in formErrors" variant="error" :label="error" :key="error"></LazyAlert>
         </div>
-        <Button class="btn" :disabled="isPending" type="submit">
+        <Button class="btn" :disabled="isPending" :loading="isPending" type="submit">
           {{ isPending ? 'Добавление...' : 'Добавить' }}
         </Button>
       </form>
@@ -56,7 +56,7 @@
 
 <script setup lang="ts">
 import { useForm } from 'vee-validate';
-import type { DealFormState } from '../../types/deals';
+import type { Deal } from '../../types/deals';
 import * as yup from 'yup';
 
 const props = withDefaults(
@@ -104,7 +104,7 @@ const createDealSchema = yup.object({
 const dialogs = useDialogsStore();
 const dialogParams = computed(() => dialogs.$state[props.name]?.params);
 
-const { handleSubmit, resetForm, values  } = useForm<DealFormState>({
+const { handleSubmit, resetForm, values  } = useForm<Deal>({
   validationSchema: createDealSchema,
   initialValues: {
     name: 'Сделка с крутой компанией',
@@ -134,7 +134,7 @@ const { sendDeal, isPending } = useDeal();
 const onSubmit = handleSubmit(async (data) => {
   formErrors.value = [];
   try {
-    await sendDeal(data as DealFormState);
+    await sendDeal(data as Deal);
     emit('send');
     exit();
   } catch (error: any) {
@@ -144,7 +144,6 @@ const onSubmit = handleSubmit(async (data) => {
 
 const open = () => {
   formErrors.value = [];
-  console.log(dialogParams.value?.columnId)
   resetForm({
     values: {
       name: 'Сделка с крутой компанией',
@@ -153,7 +152,7 @@ const open = () => {
         email: 'rgrg@domain.com',
         name: 'Компания крутая'
       },
-      status: dialogParams.value?.columnId || 'todo',
+      status: dialogParams.value?.columnId || 'tdhtrh',
     }
   });
   emit('open');

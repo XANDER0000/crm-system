@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/vue-query'
 
-export const useCreateComment = ({ refetch }: { refetch: () => void }) => {
+export const useComment = ({ refetch }: { refetch: () => void }) => {
   const config = useRuntimeConfig();
   const database = useDatabase();
   
@@ -24,8 +24,19 @@ export const useCreateComment = ({ refetch }: { refetch: () => void }) => {
     }
   })
 
+  const { mutateAsync: deleteComment } = useMutation({
+    mutationKey: ['delete a comment'],
+    mutationFn: (commentId: string) => {
+      return database.deleteDocument(DB_ID, COLLECTION_COMMENTS, commentId);
+    },
+    onSuccess: () => {
+      refetch();
+    }
+  })
+
   return {
     createComment,
+    deleteComment,
     commentRef,
     isPending
   }

@@ -40,10 +40,6 @@
   const closeSlideover = () => {
     store.closeDrawer();
   };
-
-  setTimeout(() => {
-    store.openDrawer();
-  }, 1000);
 </script>
 
 <style scoped lang="stylus">

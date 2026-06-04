@@ -10,7 +10,6 @@ export function useComments() {
 
 	const store = useSlideoverStore()
 	const cardId = store.card?.$id || ''
-  console.log(DB_ID, COLLECTION_DEALS, cardId)
 	return useQuery({
 		queryKey: ['deals', cardId],
 		queryFn: () => database.getDocument(DB_ID, COLLECTION_DEALS, cardId, [

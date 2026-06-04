@@ -7,7 +7,7 @@
       Добавить ивент
     </template>
     <template #default>
-      <form @submit.prevent="onSubmit" class="form">
+      <form @submformit.prevent="onSubmit" class="form">
         <InputField label="Наименование" for="form-create-name" class="mb-5">
           <Input
             placeholder="Наименование"

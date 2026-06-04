@@ -14,14 +14,16 @@
         <Card
           v-for="card in column.items"
           :key="card.$id"
-           :class="`board__card mb-5 ${cardLoadingRef === card.$id ? 'loading' : ''}`"
+          :class="`board__card mb-5 ${loadingCardIds.has(card.$id) ? 'loading' : ''}`"
           draggable="true"
           @dragstart="() => handleDragStart(card, column)"
         >
-          <CardHeader role="button">
-            <CardTitle class="title-5">{{ card.name }}</CardTitle>
+          <CardHeader role="button" @click="slideoverStore.openDrawer(card)">
+            <CardTitle class="title-5">
+              {{ card.name }}
+            </CardTitle>
 
-            <CardDescription class="mt-2 block">
+            <CardDescription class="mt-1 block">
               {{ convertCurrency(card.price ?? 0) }}
             </CardDescription>
           </CardHeader>
@@ -30,7 +32,7 @@
             {{ card.companyName }}
           </CardContent>
           <CardFooter>
-              {{ convertDate(card.$createdAt ?? 'Без Даты') }}
+            {{ convertDate(card.$createdAt ?? 'Без Даты') }}
           </CardFooter>
         </Card>
       </transition-group>
@@ -43,6 +45,7 @@
 import type { Card, Column } from '../types/board';
 
 const { data, refetch } = useBoardQuery();
+const slideoverStore = useSlideoverStore();
 
 const dragCardRef = ref<Card | null>(null);
 const sourceColumnRef = ref<Column | null>(null);
@@ -75,7 +78,7 @@ const handleDragStart = (card: Card, column: Column) => {
 }
 
 const { dragDeal } = useDeal()
-const cardLoadingRef = ref<string | null>(null)
+const loadingCardIds = ref<Set<string>>(new Set());
 
 const handleDrop = async (column: Column) => {
   dragEnterColumnId.value = null
@@ -85,7 +88,8 @@ const handleDrop = async (column: Column) => {
   }
   
   if (dragCardRef.value?.$id && sourceColumnRef.value) {
-    cardLoadingRef.value = dragCardRef.value?.$id;
+    const cardId = dragCardRef.value.$id;
+    loadingCardIds.value.add(cardId);
     try {
       await dragDeal({
         dealId: dragCardRef.value.$id,
@@ -93,7 +97,7 @@ const handleDrop = async (column: Column) => {
       })
       await refetch();
     } finally {
-      cardLoadingRef.value = null;
+      loadingCardIds.value.delete(cardId);
     }
   }
 }

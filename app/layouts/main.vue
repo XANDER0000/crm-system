@@ -5,6 +5,7 @@
       <div class="page__main">
         <slot></slot>
       </div>
+      <Slideover />
     </div>
   </div>
 </template>

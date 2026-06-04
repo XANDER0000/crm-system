@@ -15,15 +15,26 @@ const props = defineProps({
     default: 'text',
   },
   mod: String,
+  modelValue: String,
 });
 
+const emit = defineEmits(['update:modelValue']);
+
 const {
-  value,
   errorMessage,
   handleBlur,
   handleChange,
   meta,
 } = useField(() => props.name);
+
+const value = computed({
+  get: () => props.modelValue,
+  set: (val) => {
+    emit('update:modelValue', val)
+    handleChange();
+  }
+})
+
 
 const computedClass = computed(() => useModClasses('input', props.mod));
 </script>
@@ -72,9 +83,9 @@ const computedClass = computed(() => useModClasses('input', props.mod));
   &:invalid
     box-shadow none
   &:hover
-    background-color var(--color-grey-2)
-  &:focus-visible
     background-color var(--bg-color-light)
+  &:focus-visible
+    background-color var(--color-card)
     border-color var(--color-text-accent)
     outline none
   &::placeholder

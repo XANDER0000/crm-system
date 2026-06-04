@@ -21,9 +21,9 @@
             <span class="sidebar__btn-label">{{ item.name }}</span>
           </NuxtLink>
         </div>
+      </div>
     </div>
-  </div>
-</aside>
+  </aside>
 </template>
 
 <script setup lang="ts">

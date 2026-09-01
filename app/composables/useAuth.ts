@@ -20,9 +20,7 @@ export const useAuth = () => {
   const accessToken = useToken();
   
   // Инициализация Appwrite клиента
-  const client = new Client()
-    .setEndpoint(endpoint)
-    .setProject(projectId);
+  const client = useAppwriteClient();
   
   const account = new Account(client);
   

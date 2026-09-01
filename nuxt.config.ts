@@ -79,6 +79,8 @@ export default defineNuxtConfig({
       appwriteDbId: process.env.NUXT_PUBLIC_APPWRITE_DB_ID ?? "",
       appwriteCollectionDeals: process.env.NUXT_PUBLIC_APPWRITE_COLLECTION_DEALS ?? "",
       appwriteCollectionComments: process.env.NUXT_PUBLIC_APPWRITE_COLLECTION_COMMENTS ?? "",
+      appwriteCollectionCustomers: process.env.NUXT_PUBLIC_APPWRITE_COLLECTION_CUSTOMERS ?? "",
+      appwriteBucketId: process.env.NUXT_PUBLIC_APPWRITE_BUCKET_ID ?? "",
     },
   },
 

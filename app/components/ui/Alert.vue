@@ -118,6 +118,9 @@ const onClose = () => {
     .nuxt-icon
       color var(--color-warning)
 
+  &--color-white
+    color var(--color-white)
+
   &__close
     cursor pointer
     transition opacity .15s ease

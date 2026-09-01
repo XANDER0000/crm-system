@@ -25,15 +25,8 @@ const {
   handleBlur,
   handleChange,
   meta,
+  value,
 } = useField(() => props.name);
-
-const value = computed({
-  get: () => props.modelValue,
-  set: (val) => {
-    emit('update:modelValue', val)
-    handleChange();
-  }
-})
 
 
 const computedClass = computed(() => useModClasses('input', props.mod));
